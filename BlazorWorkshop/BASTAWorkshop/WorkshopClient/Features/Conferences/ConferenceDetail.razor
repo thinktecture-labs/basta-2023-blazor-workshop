@@ -16,12 +16,16 @@ else if (_conf is not null)
     <MudPaper Elevation="2" Class="ma-6 pa-4">
         <EditForm @ref="_editForm" class="d-flex flex-column" Model="@_conf" OnSubmit="@SaveConference">
             <DataAnnotationsValidator />
-            <ValidationSummary />
             <MudTextField @bind-Value="_conf.Title" ReadOnly="_readonly" Label="Title"></MudTextField>
+            <ValidationMessage For="@(() => _conf.Title)" />
             <MudTextField @bind-Value="_conf.City" ReadOnly="_readonly" Label="City"></MudTextField>
+            <ValidationMessage For="@(() => _conf.City)" />
             <MudTextField @bind-Value="_conf.Country" ReadOnly="_readonly" Label="Country"></MudTextField>
+            <ValidationMessage For="@(() => _conf.Country)" />
             <MudDatePicker @bind-Date="_conf.DateFrom" ReadOnly="_readonly" Label="Date from"></MudDatePicker>
+            <ValidationMessage For="@(() => _conf.DateFrom)" />
             <MudDatePicker @bind-Date="_conf.DateTo" ReadOnly="_readonly" Label="Date to"></MudDatePicker>
+            <ValidationMessage For="@(() => _conf.DateTo)" />
 
             @if (!_readonly)
             {

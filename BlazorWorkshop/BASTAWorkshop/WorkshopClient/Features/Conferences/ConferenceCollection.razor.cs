@@ -22,9 +22,10 @@ namespace WorkshopClient.Features.Conferences
             await base.OnInitializedAsync();
         }
 
-        private void NavigateToDetails(string mode, Guid id)
+        private void NavigateToDetails(string mode, Guid? id = null)
         {
-            _navigationManager.NavigateTo($"/conferences/detail/{mode}/{id}");
+            _navigationManager.NavigateTo(
+                id is null ? $"/conferences/detail/{mode}" : $"/conferences/detail/{mode}/{id}");
         }
     }
 }

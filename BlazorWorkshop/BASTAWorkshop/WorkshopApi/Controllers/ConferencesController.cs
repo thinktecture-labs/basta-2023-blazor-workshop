@@ -4,6 +4,8 @@ using WorkshopApi.Database;
 using WorkshopShared;
 using WorkshopApi.Utils;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
+using WorkshopApi.SignalR;
 
 namespace WorkshopApi.Controllers
 {
@@ -13,10 +15,12 @@ namespace WorkshopApi.Controllers
     public class ConferencesController : ControllerBase
     {
         private readonly ConferencesDbContext context;
+        private readonly IHubContext<ConferencesHub> _hub;
 
-        public ConferencesController(ConferencesDbContext context)
+        public ConferencesController(ConferencesDbContext context, IHubContext<ConferencesHub> hub)
         {
             this.context = context;
+            _hub = hub;
         }
 
         [HttpGet]
@@ -38,7 +42,7 @@ namespace WorkshopApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ConferenceDetails> AddConference([FromBody] ConferenceDetails conference)
+        public async Task<ActionResult<ConferenceDetails>> AddConference([FromBody] ConferenceDetails conference)
         {
             if (!ModelState.IsValid)
             {
@@ -47,7 +51,9 @@ namespace WorkshopApi.Controllers
             var conf = conference.ToConference();
 
             context.Conferences.Add(conf);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+
+            await _hub.Clients.All.SendAsync(SignalRNames.ConferenceAdded, conf.ToOverview());
 
             return CreatedAtAction(nameof(GetConferenceById), new { id = conf.Id }, conf);
         }
@@ -66,6 +72,7 @@ namespace WorkshopApi.Controllers
             try
             {
                 await context.SaveChangesAsync();
+                await _hub.Clients.All.SendAsync(SignalRNames.ConferenceUpdated, conf.ToOverview());
             }
             catch (DbUpdateConcurrencyException)
             {

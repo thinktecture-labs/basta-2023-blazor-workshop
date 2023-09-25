@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using WorkshopApi.Database;
 using WorkshopApi.Utils;
 using Microsoft.AspNetCore.Authorization;
+using WorkshopApi.SignalR;
+using WorkshopShared;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -24,6 +27,8 @@ builder.Services.AddAuthorization(config =>
         });
     }
 );
+
+builder.Services.AddSignalR();
 
 builder.Services.AddFluentValidationAutoValidation()
     .AddFluentValidationClientsideAdapters();
@@ -64,5 +69,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ConferencesHub>(SignalRNames.HubName);
 
 app.Run();

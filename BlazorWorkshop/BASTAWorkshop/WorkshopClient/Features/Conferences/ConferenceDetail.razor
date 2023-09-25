@@ -1,4 +1,9 @@
-﻿@page "/conferences/detail/{id:guid}"
+﻿@page "/conferences/detail/{mode}/{id:guid}"
+@page "/conferences/detail/{mode}"
+
+<SectionContent SectionName="top-bar-right">
+    <MudToggleIconButton Color="Color.Inherit" ToggledColor="Color.Inherit" Toggled="!_readonly" ToggledChanged="@ToggleEditMode" Icon="@Icons.Material.Filled.RemoveRedEye" ToggledIcon="@Icons.Material.Filled.Save"></MudToggleIconButton>
+</SectionContent>
 
 @if (_isLoading)
 {
@@ -9,16 +14,22 @@ else if (_conf is not null)
     <MudText Class="ma-6" Typo="Typo.h4">@_conf.Title</MudText>
 
     <MudPaper Elevation="2" Class="ma-6 pa-4">
-        <EditForm class="d-flex flex-column" Model="@_conf" OnSubmit="@SaveConference">
-            <MudTextField @bind-Value="_conf.Title" Label="Title"></MudTextField>
-            <MudTextField @bind-Value="_conf.City" Label="City"></MudTextField>
-            <MudTextField @bind-Value="_conf.Country" Label="Country"></MudTextField>
-            <MudDatePicker @bind-Date="_conf.DateFrom" Label="Date from"></MudDatePicker>
-            <MudDatePicker @bind-Date="_conf.DateTo" Label="Date to"></MudDatePicker>
-            <div class="d-flex justify-end mt-6">
-                <MudButton Color="Color.Primary" Variant="Variant.Outlined" ButtonType="ButtonType.Submit">Speichern</MudButton>
-                <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Cancel">Abbrechen</MudButton>
-            </div>
+        <EditForm @ref="_editForm" class="d-flex flex-column" Model="@_conf" OnSubmit="@SaveConference">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <MudTextField @bind-Value="_conf.Title" ReadOnly="_readonly" Label="Title"></MudTextField>
+            <MudTextField @bind-Value="_conf.City" ReadOnly="_readonly" Label="City"></MudTextField>
+            <MudTextField @bind-Value="_conf.Country" ReadOnly="_readonly" Label="Country"></MudTextField>
+            <MudDatePicker @bind-Date="_conf.DateFrom" ReadOnly="_readonly" Label="Date from"></MudDatePicker>
+            <MudDatePicker @bind-Date="_conf.DateTo" ReadOnly="_readonly" Label="Date to"></MudDatePicker>
+
+            @if (!_readonly)
+            {
+                <div class="d-flex justify-end gap-4 mt-6">
+                    <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Cancel">Abbrechen</MudButton>
+                    <MudButton Color="Color.Primary" Variant="Variant.Outlined" ButtonType="ButtonType.Submit">Speichern</MudButton>
+                </div>
+            }
         </EditForm>
     </MudPaper>
 }

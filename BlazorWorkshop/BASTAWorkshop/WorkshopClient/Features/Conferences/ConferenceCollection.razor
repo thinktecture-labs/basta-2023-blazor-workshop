@@ -2,12 +2,19 @@
 
 <PageTitle>Conference Overview</PageTitle>
 
+<SectionContent SectionName="top-bar-right">
+    <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(() => NavigateToDetails(ConferenceMode.Create, Guid.Empty))"></MudIconButton>
+</SectionContent>
+
 <MudDataGrid Class="ma-6" Items="@_conferences" Loading="_isLoading">
     <Columns>
         <PropertyColumn Property="x => x.Title" Title="Titel" />
         <TemplateColumn CellClass="d-flex justify-end">
             <CellTemplate>
-                <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => NavigateToDetails(context.Item.Id))"></MudIconButton>
+                <MudMenu Icon="@Icons.Material.Filled.MoreVert">
+                    <MudMenuItem Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => NavigateToDetails(ConferenceMode.Show, context.Item.Id))">Profile</MudMenuItem>
+                    <MudMenuItem Icon="@Icons.Material.Filled.Edit" OnClick="@(() => NavigateToDetails(ConferenceMode.Edit, context.Item.Id))">Profile</MudMenuItem>
+                </MudMenu>
             </CellTemplate>
         </TemplateColumn>
     </Columns>

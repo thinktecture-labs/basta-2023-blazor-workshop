@@ -7,6 +7,8 @@
         <MudIconButton Icon="@Icons.Material.Filled.Menu" OnClick="ToggleDrawer"></MudIconButton>
         <MudText Typo="Typo.h6">BASTA! 2023 Blazor ROCKS</MudText>
         <MudSpacer />
+        <SectionOutlet SectionName="top-bar-right"></SectionOutlet>
+        <LoginDisplay></LoginDisplay>
     </MudAppBar>
     <MudDrawer @bind-Open="@_showDrawer">
         <MudNavMenu Bordered="true">

@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WorkshopApi.Database;
 using WorkshopShared;
 using WorkshopApi.Utils;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WorkshopApi.Controllers

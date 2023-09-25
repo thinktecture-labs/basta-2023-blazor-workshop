@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WorkshopApi.Database;
+using WorkshopApi.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services.AddDbContext<ConferencesDbContext>(
     options => options.UseInMemoryDatabase(databaseName: "ConfTool"));
 
 var app = builder.Build();
+
+DataGenerator.Initialize(app.Services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

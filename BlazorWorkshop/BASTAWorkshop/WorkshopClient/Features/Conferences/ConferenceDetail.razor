@@ -15,6 +15,7 @@ else if (_conf is not null)
 
     <MudPaper Elevation="2" Class="ma-6 pa-4">
         <EditForm @ref="_editForm" class="d-flex flex-column" Model="@_conf" OnSubmit="@SaveConference">
+            <FluentValidationValidator />
             <DataAnnotationsValidator />
             <MudTextField @bind-Value="_conf.Title" ReadOnly="_readonly" Label="Title"></MudTextField>
             <ValidationMessage For="@(() => _conf.Title)" />

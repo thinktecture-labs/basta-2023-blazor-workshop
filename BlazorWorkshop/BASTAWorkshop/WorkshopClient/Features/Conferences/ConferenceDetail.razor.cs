@@ -42,9 +42,18 @@ namespace WorkshopClient.Features.Conferences
         {
             if (_editForm?.EditContext is not null && _editForm.EditContext.Validate())
             {
-                // TODO: Save conf in API
-                await _httpClient.PutAsJsonAsync($"conferences/{Id}", _conf);
-                _navigationManager.NavigateTo("/conferences/overview");
+                try
+                {
+                    var result = await _httpClient.PutAsJsonAsync($"conferences/{Id}", _conf);
+                    if (result.IsSuccessStatusCode)
+                    {
+                        _navigationManager.NavigateTo("/conferences/overview");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 

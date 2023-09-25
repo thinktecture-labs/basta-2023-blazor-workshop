@@ -8,7 +8,11 @@
 
 <MudDataGrid Class="ma-6" Items="@_conferences" Loading="_isLoading">
     <Columns>
-        <PropertyColumn Property="x => x.Title" Title="Titel" />
+        <TemplateColumn>
+            <CellTemplate>
+                <MudText Typo="Typo.body1" Color="@(_updatedId == context.Item.Id ? Color.Primary : Color.Inherit)">@context.Item.Title</MudText>
+            </CellTemplate>
+        </TemplateColumn>
         <TemplateColumn CellClass="d-flex justify-end">
             <CellTemplate>
                 <MudMenu Icon="@Icons.Material.Filled.MoreVert">

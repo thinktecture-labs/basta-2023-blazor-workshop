@@ -1,0 +1,14 @@
+﻿@page "/conferences/overview"
+
+<PageTitle>Conference Overview</PageTitle>
+
+<MudDataGrid Items="@_conferences" Loading="_isLoading">
+    <Columns>
+        <PropertyColumn Property="x => x.Title" Title="Titel" />
+    </Columns>
+</MudDataGrid>
+
+@if (!_isLoading && !_conferences.Any())
+{
+    <MudAlert Severity="Severity.Info">Keine Konferenzen gefunden.</MudAlert>
+}

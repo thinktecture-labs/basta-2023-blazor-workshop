@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(config => config.AddDefaultPolicy(policy =>
 {
-    policy.AllowAnyOrigin()
+    policy
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials()

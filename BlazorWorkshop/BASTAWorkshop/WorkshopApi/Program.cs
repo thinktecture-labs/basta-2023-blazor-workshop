@@ -1,10 +1,28 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using WorkshopApi.Database;
 using WorkshopApi.Utils;
-
+using Microsoft.AspNetCore.Authorization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        builder.Configuration.Bind("Oidc", options);
+        options.RequireHttpsMetadata = false; // NOT DO THIS IN PRODUCTION!
+        options.RefreshOnIssuerKeyNotFound = true;
+    });
+
+builder.Services.AddAuthorization(config =>
+    {
+        config.AddPolicy("api", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+        });
+    }
+);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -38,6 +56,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors();
 app.UseHttpsRedirection();
 
+app.UseAuthentication()l
 app.UseAuthorization();
 
 app.MapControllers();

@@ -5,9 +5,11 @@ using WorkshopApi.Database;
 using WorkshopShared;
 using WorkshopApi.Utils;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WorkshopApi.Controllers
 {
+    [Authorize("api")]
     [Route("api/[controller]")]
     [ApiController]
     public class ConferencesController : ControllerBase

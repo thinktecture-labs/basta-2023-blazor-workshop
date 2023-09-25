@@ -2,9 +2,14 @@
 
 <PageTitle>Conference Overview</PageTitle>
 
-<MudDataGrid Items="@_conferences" Loading="_isLoading">
+<MudDataGrid Class="ma-6" Items="@_conferences" Loading="_isLoading">
     <Columns>
         <PropertyColumn Property="x => x.Title" Title="Titel" />
+        <TemplateColumn CellClass="d-flex justify-end">
+            <CellTemplate>
+                <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => NavigateToDetails(context.Item.Id))"></MudIconButton>
+            </CellTemplate>
+        </TemplateColumn>
     </Columns>
 </MudDataGrid>
 

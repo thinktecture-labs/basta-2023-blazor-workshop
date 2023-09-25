@@ -12,7 +12,7 @@ namespace WorkshopApi.Utils
         => new ConferenceOverview() { Id = conf.Id, Title = conf.Title, };
 
         public static Conference ToConference(this ConferenceDetails details)
-        => new Conference() { Id = details.Id, Title = details.Title, City = details.City, DateFrom = details.DateFrom, DateTo = details.DateTo, Country = details.Country, Url = details.Url, };
+        => new Conference() { Id = details.Id, Title = details.Title, City = details.City, DateFrom = details.DateFrom ?? DateTime.Now, DateTo = details.DateTo ?? DateTime.Now, Country = details.Country, Url = details.Url, };
     }
 
 

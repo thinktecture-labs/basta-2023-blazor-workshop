@@ -1,0 +1,28 @@
+﻿@page "/conferences/detail/{id:guid}"
+
+@if (_isLoading)
+{
+    <MudProgressLinear Indeterminate="true"></MudProgressLinear>
+}
+else if (_conf is not null)
+{
+    <MudText Class="ma-6" Typo="Typo.h4">@_conf.Title</MudText>
+
+    <MudPaper Elevation="2" Class="ma-6 pa-4">
+        <EditForm class="d-flex flex-column" Model="@_conf" OnSubmit="@SaveConference">
+            <MudTextField @bind-Value="_conf.Title" Label="Title"></MudTextField>
+            <MudTextField @bind-Value="_conf.City" Label="City"></MudTextField>
+            <MudTextField @bind-Value="_conf.Country" Label="Country"></MudTextField>
+            <MudDatePicker @bind-Date="_conf.DateFrom" Label="Date from"></MudDatePicker>
+            <MudDatePicker @bind-Date="_conf.DateTo" Label="Date to"></MudDatePicker>
+            <div class="d-flex justify-end mt-6">
+                <MudButton Color="Color.Primary" Variant="Variant.Outlined" ButtonType="ButtonType.Submit">Speichern</MudButton>
+                <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Cancel">Abbrechen</MudButton>
+            </div>
+        </EditForm>
+    </MudPaper>
+}
+else
+{
+    <MudAlert Severity="Severity.Info">Die Konferenz wurde nicht gefunden!</MudAlert>
+}

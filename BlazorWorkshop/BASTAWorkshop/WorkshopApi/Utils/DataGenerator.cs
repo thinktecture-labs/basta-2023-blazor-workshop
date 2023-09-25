@@ -7,8 +7,9 @@ namespace WorkshopApi.Utils
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
+            using var scope = serviceProvider.CreateScope();
             using (var context = new ConferencesDbContext(
-                serviceProvider.GetRequiredService<DbContextOptions<ConferencesDbContext>>()))
+                scope.ServiceProvider.GetRequiredService<DbContextOptions<ConferencesDbContext>>()))
             {
                 if (context.Conferences.Any())
                 {
@@ -108,7 +109,8 @@ namespace WorkshopApi.Utils
                         City = "City " + i,
                         Country = "Germany",
                         DateFrom = new DateTime(2021, 1, 2),
-                        DateTo = new DateTime(2021, 1, 3)
+                        DateTo = new DateTime(2021, 1, 3),
+
                     };
 
                     moreConfs.Add(conf);

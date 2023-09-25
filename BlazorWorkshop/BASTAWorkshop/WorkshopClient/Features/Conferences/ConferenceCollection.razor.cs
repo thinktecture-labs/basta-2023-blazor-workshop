@@ -14,7 +14,7 @@ namespace WorkshopClient.Features.Conferences
         protected override async Task OnInitializedAsync()
         {
             _conferences =
-                await _httpClient.GetFromJsonAsync<IEnumerable<ConferenceOverview>>("api/conferences")
+                await _httpClient.GetFromJsonAsync<IEnumerable<ConferenceOverview>>("conferences")
                 ?? Enumerable.Empty<ConferenceOverview>();
 
             _isLoading = false;

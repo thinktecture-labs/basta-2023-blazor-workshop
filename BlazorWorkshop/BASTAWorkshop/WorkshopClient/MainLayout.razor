@@ -1,0 +1,49 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="DefaultTheme" />
+
+<MudLayout>
+    <MudAppBar>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" OnClick="ToggleDrawer"></MudIconButton>
+        <MudText Typo="Typo.h6">BASTA! 2023 Blazor ROCKS</MudText>
+        <MudSpacer />
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_showDrawer">
+        <MudNavMenu Bordered="true">
+            <MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard" Match="NavLinkMatch.All" IconColor="Color.Inherit">Dashboard</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+
+@code {
+    private bool _showDrawer = false;
+    private MudTheme DefaultTheme = new MudTheme
+        {
+            Typography = new Typography
+            {
+                Body1 = new Body1 { FontFamily = new[] { "Montserrat", "Helvetica", "Arial", "sans-serif" } },
+                Body2 = new Body2 { FontFamily = new[] { "Montserrat", "Helvetica", "Arial", "sans-serif" } },
+                Caption = new Caption { FontFamily = new[] { "Montserrat", "Helvetica", "Arial", "sans-serif" } },
+                Overline = new Overline { FontFamily = new[] { "Montserrat", "Helvetica", "Arial", "sans-serif" } },
+                Subtitle1 = new Subtitle1 { FontFamily = new[] { "Montserrat", "Helvetica", "Arial", "sans-serif" } },
+                Subtitle2 = new Subtitle2 { FontFamily = new[] { "Montserrat", "Helvetica", "Arial", "sans-serif" } },
+                H1 = new H1 { FontFamily = new[] { "Montserrat", "Helvetica", "Arial", "sans-serif" } },
+                H2 = new H2 { FontFamily = new[] { "Montserrat", "Helvetica", "Arial", "sans-serif" } },
+                H3 = new H3 { FontFamily = new[] { "Montserrat", "Helvetica", "Arial", "sans-serif" } },
+                H4 = new H4 { FontFamily = new[] { "Montserrat", "Helvetica", "Arial", "sans-serif" } },
+                H5 = new H5 { FontFamily = new[] { "Montserrat", "Helvetica", "Arial", "sans-serif" } },
+                H6 = new H6 { FontFamily = new[] { "Montserrat", "Helvetica", "Arial", "sans-serif" } },
+            },
+            Palette = new PaletteLight { Primary = "#FF584F", PrimaryLighten = "#FA6E64", PrimaryDarken = "#E9483D", PrimaryContrastText = "#FFFFFF", AppbarBackground = "FFFFFF", AppbarText = "FF584F" }
+        };
+
+    private void ToggleDrawer()
+    {
+        _showDrawer = !_showDrawer;
+    }
+
+}

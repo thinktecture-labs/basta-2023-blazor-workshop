@@ -4,10 +4,9 @@ using WorkshopShared;
 
 namespace WorkshopClient.Services;
 
-public class RealTimeService(NotificationService notificationService)
+public class RealTimeService
 {
     private HubConnection? _hubConnection;
-    private readonly NotificationService _notificationService = notificationService;
 
     public Action<ConferenceDetails>? OnConferenceAdded { get; set; }
     public Action<ConferenceDetails>? OnConferenceUpdated { get; set; }
@@ -20,10 +19,7 @@ public class RealTimeService(NotificationService notificationService)
             .Build();
 
         _hubConnection.On<ConferenceDetails>(SignalRNames.ConferenceAdded, handler => OnConferenceAdded?.Invoke(handler));
-        _hubConnection.On<ConferenceDetails>(SignalRNames.ConferenceUpdated, async handler =>
-        {
-            await _notificationService.ShowNotificationAsync("New conference added", $"Conference {handler.Title} has been added");
-        });
+        _hubConnection.On<ConferenceDetails>(SignalRNames.ConferenceUpdated, handler => OnConferenceUpdated?.Invoke(handler));
 
         await _hubConnection.StartAsync();
     }

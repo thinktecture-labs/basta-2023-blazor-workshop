@@ -1,6 +1,5 @@
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components;
-using WorkshopClient.Features.Notification;
 using WorkshopClient.Services;
 using WorkshopShared;
 
@@ -11,7 +10,6 @@ namespace WorkshopClient.Features.Conferences
         [Inject] private HttpClient _httpClient { get; set; } = default!;
         [Inject] private RealTimeService _realTimeService { get; set; } = default!;
         [Inject] private NavigationManager _navigationManager { get; set; } = default!;
-        [Inject] private NotificationService _notificationService { get; set; } = default!;
 
         private bool _isLoading = true;
         private Guid _updatedId = Guid.Empty;
@@ -26,7 +24,6 @@ namespace WorkshopClient.Features.Conferences
                 {
                     item.Title = conference.Title;
                     _updatedId = conference.Id;
-                    await _notificationService.ShowNotificationAsync("TEst", "TEst");
                     StateHasChanged();
                 }
             };

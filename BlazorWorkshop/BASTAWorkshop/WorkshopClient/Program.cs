@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using WorkshopClient;
 using WorkshopClient.Features.Authentication.Handler;
-using WorkshopClient.Features.Notification;
 using WorkshopClient.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -25,7 +24,6 @@ builder.Services.AddOidcAuthentication(options =>
     builder.Configuration.Bind("Oidc", options.ProviderOptions);
 });
 
-builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<RealTimeService>();
 
 builder.Services.AddMudServices();
